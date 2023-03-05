@@ -3,4 +3,5 @@ from api import views
 
 urlpatterns = [
     path('sayHi/', views.sayHi),
+    path('chatWithWifi/', views.chatWithWifi),
 ]
