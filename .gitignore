@@ -5,7 +5,9 @@ logs
 __pycache__
 .ipynb_checkpoints
 .*.swp
+
 *.pt
+*.pth
 
 build
 *.c

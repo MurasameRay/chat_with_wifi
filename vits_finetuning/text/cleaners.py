@@ -1,5 +1,5 @@
 import re
-from text.japanese import japanese_to_romaji_with_accent
+from vits_finetuning.text.japanese import japanese_to_romaji_with_accent
 
 def japanese_cleaners(text):
     text = f'[JA]{text}[JA]'

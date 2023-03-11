@@ -3,9 +3,10 @@ import random
 import torch
 import torch.utils.data
 
-import commons 
-from mel_processing import spectrogram_torch
-from utils import load_wav_to_torch, load_filepaths_and_text
+import vits_finetuning.commons as commons
+
+from vits_finetuning.mel_processing import spectrogram_torch
+from vits_finetuning.utils import load_wav_to_torch, load_filepaths_and_text
 from text import text_to_sequence, cleaned_text_to_sequence
 
 

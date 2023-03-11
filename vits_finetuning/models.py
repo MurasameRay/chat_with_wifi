@@ -2,15 +2,17 @@ import math
 import torch
 from torch import nn
 from torch.nn import functional as F
+import os
 
-import commons
-import modules
-import attentions
-import monotonic_align
+
+import vits_finetuning.commons as commons
+import vits_finetuning.modules as modules
+import vits_finetuning.attentions as attentions
+import vits_finetuning.monotonic_align as monotonic_align
 
 from torch.nn import Conv1d, ConvTranspose1d, Conv2d
 from torch.nn.utils import weight_norm, remove_weight_norm, spectral_norm
-from commons import init_weights, get_padding
+from vits_finetuning.commons import init_weights, get_padding
 
 
 class StochasticDurationPredictor(nn.Module):
@@ -59,7 +61,7 @@ class StochasticDurationPredictor(nn.Module):
       flows = self.flows
       assert w is not None
 
-      logdet_tot_q = 0 
+      logdet_tot_q = 0
       h_w = self.post_pre(w)
       h_w = self.post_convs(h_w, x_mask)
       h_w = self.post_proj(h_w) * x_mask
@@ -68,7 +70,7 @@ class StochasticDurationPredictor(nn.Module):
       for flow in self.post_flows:
         z_q, logdet_q = flow(z_q, x_mask, g=(x + h_w))
         logdet_tot_q += logdet_q
-      z_u, z1 = torch.split(z_q, [1, 1], 1) 
+      z_u, z1 = torch.split(z_q, [1, 1], 1)
       u = torch.sigmoid(z_u) * x_mask
       z0 = (w - u) * x_mask
       logdet_tot_q += torch.sum((F.logsigmoid(z_u) + F.logsigmoid(-z_u)) * x_mask, [1,2])
@@ -391,7 +393,7 @@ class SynthesizerTrn(nn.Module):
   Synthesizer for Training
   """
 
-  def __init__(self, 
+  def __init__(self,
     n_vocab,
     spec_channels,
     segment_size,
@@ -402,11 +404,11 @@ class SynthesizerTrn(nn.Module):
     n_layers,
     kernel_size,
     p_dropout,
-    resblock, 
-    resblock_kernel_sizes, 
-    resblock_dilation_sizes, 
-    upsample_rates, 
-    upsample_initial_channel, 
+    resblock,
+    resblock_kernel_sizes,
+    resblock_dilation_sizes,
+    upsample_rates,
+    upsample_initial_channel,
     upsample_kernel_sizes,
     n_speakers=0,
     gin_channels=0,
@@ -485,7 +487,7 @@ class SynthesizerTrn(nn.Module):
     else:
       logw_ = torch.log(w + 1e-6) * x_mask
       logw = self.dp(x, x_mask, g=g)
-      l_length = torch.sum((logw - logw_)**2, [1,2]) / torch.sum(x_mask) # for averaging 
+      l_length = torch.sum((logw - logw_)**2, [1,2]) / torch.sum(x_mask) # for averaging
 
     # expand prior
     m_p = torch.matmul(attn.squeeze(1), m_p.transpose(1, 2)).transpose(1, 2)

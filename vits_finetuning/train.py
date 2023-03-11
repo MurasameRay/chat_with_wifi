@@ -13,8 +13,8 @@ import logging
 
 logging.getLogger('numba').setLevel(logging.WARNING)
 
-import commons
-import utils
+import vits_finetuning.commons as commons
+import vits_finetuning.utils as utils
 from data_utils import (
   TextAudioLoader,
   TextAudioCollate,

@@ -10,12 +10,12 @@ from torch import nn
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
-import commons
-import utils
-from data_utils import TextAudioLoader, TextAudioCollate, TextAudioSpeakerLoader, TextAudioSpeakerCollate
-from models import SynthesizerTrn
-from text.symbols import symbols
-from text import text_to_sequence
+import vits_finetuning.commons as commons
+import vits_finetuning.utils as utils
+# from data_utils import TextAudioLoader, TextAudioCollate, TextAudioSpeakerLoader, TextAudioSpeakerCollate
+from vits_finetuning.models import SynthesizerTrn
+from vits_finetuning.text.symbols import symbols
+from vits_finetuning.text import text_to_sequence
 
 from scipy.io.wavfile import write
 import numpy as np
@@ -24,8 +24,8 @@ class Chat:
     hps, net_g = [],[]
 
     def __init__(self):
-        config_path = "configs/config.json"  # @param {type:"string"}
-        model_path = "models/checkpoints/G_3000.pth"  # @param {type:"string"}
+        config_path = "vits_finetuning/configs/config.json"  # @param {type:"string"}
+        model_path = "vits_finetuning/models/checkpoints/G_3000.pth"  # @param {type:"string"}
         hps = utils.get_hparams_from_file(config_path)
         net_g = SynthesizerTrn(
             len(hps.symbols),
