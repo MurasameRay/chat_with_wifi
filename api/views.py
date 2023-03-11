@@ -15,7 +15,7 @@ def sayHi(request):
 Robot = Chat()
 
 @api_view(['POST'])
-def chatWithWifi(request):
+def chatWithWife(request):
     name = request.POST.get('word', default='zhuhaitao')
     audio = Robot.chat_request("")
     return Response({
