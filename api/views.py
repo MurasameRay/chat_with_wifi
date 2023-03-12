@@ -18,12 +18,13 @@ def sayHi(request):
     })
 
 Robot = Chat()
+Robot.__init__()
 
 @api_view(['POST'])
 def chatWithWife(request):
-
-    name = request.POST.get('word', default='zhuhaitao')
-    audio = Robot.chat_request("")
+    data = json.loads(request.body)
+    test = Robot
+    audio = Robot.chat_request(word=data["word"])
     return Response({
         "audio": audio
     })

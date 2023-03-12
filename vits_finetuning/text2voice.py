@@ -21,23 +21,24 @@ from scipy.io.wavfile import write
 import numpy as np
 
 class Chat:
+
     hps, net_g = [],[]
-
+    config_path,model_path = "",""
     def __init__(self):
-        config_path = "vits_finetuning/configs/config.json"  # @param {type:"string"}
-        model_path = "vits_finetuning/models/checkpoints/G_3000.pth"  # @param {type:"string"}
-        hps = utils.get_hparams_from_file(config_path)
-        net_g = SynthesizerTrn(
-            len(hps.symbols),
-            hps.data.filter_length // 2 + 1,
-            hps.train.segment_size // hps.data.hop_length,
-            n_speakers=hps.data.n_speakers,
-            **hps.model).cuda()
-        model = net_g.eval()
-        model = utils.load_checkpoint(model_path, net_g, None)
+        self.config_path = "vits_finetuning/configs/config.json"  # @param {type:"string"}
+        self.model_path = "vits_finetuning/models/checkpoints/G_3000.pth"  # @param {type:"string"}
+        self.hps = utils.get_hparams_from_file(self.config_path)
+        self.net_g = SynthesizerTrn(
+            len(self.hps.symbols),
+            self.hps.data.filter_length // 2 + 1,
+            self.hps.train.segment_size // self.hps.data.hop_length,
+            n_speakers=self.hps.data.n_speakers,
+            **self.hps.model).cuda()
+        model = self.net_g.eval()
+        model = utils.load_checkpoint(self.model_path, self.net_g, None)
 
-    def get_text(text, hps):
-        text_norm = text_to_sequence(text, hps.data.text_cleaners)
+    def get_text(self, text, hps):
+        text_norm = text_to_sequence(text, self.hps.data.text_cleaners)
         if hps.data.add_blank:
             text_norm = commons.intersperse(text_norm, 0)
         text_norm = torch.LongTensor(text_norm)
@@ -59,7 +60,7 @@ class Chat:
 
 
 
-    def chat_request(self, text):
+    def chat_request(self, word):
         speaker_id = 10  # @param {type:"number"}
         text = "よるまで、いっしょに帰りましょう"  # @param {type:"string"}
         noise_scale = 0.6  # @param {type:"number"}
