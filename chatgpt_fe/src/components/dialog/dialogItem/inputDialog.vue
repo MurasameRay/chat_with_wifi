@@ -17,7 +17,7 @@
   import {getVoice} from '../../../request/api/voice'
   import { ref } from 'vue'
   const text = ref('')
-  const audio = ref(null)
+  const audio = ref(null) 
   async function enterKey() {
     let res = await getVoice(text.value)
     console.log(res);

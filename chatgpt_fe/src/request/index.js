@@ -2,7 +2,7 @@ import axios from "axios";
 
 let service = axios.create({
 	baseURL: "http://localhost:8000/api/",
-	timeout: 10000,
+	timeout: 100000,
 });
 
 // 请求拦截处理 请求拦截 在请求拦截中可以补充请求相关的配置
