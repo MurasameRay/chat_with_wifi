@@ -93,8 +93,8 @@ class Chat:
         song = song.set_frame_rate(44100)
         print(os.listdir("./"))
         name = "test_"+datetime.now().strftime('%Y_%m_%d_%H_%M_%S')+".mp3"
-        song.export("chatgpt_fe\\src\\public\\"+name, format="mp3")
-        # os.system("move \"test.mp3\" chatgpt_fe\\src\\public\\")
+        song.export("chatgpt_fe\\public\\" + name, format="mp3")
+        # os.system("move \""+ name +"\" chatgpt_fe\\src\\public\\")
         # with open(r"F:\Project\chat_with_wifi\test.mp3","rb", encoding="UTF-8") as f:
         #     audio = f.read()
         # audio = AudioSegment.from_mp3(Path(r"F:\Project\chat_with_wifi\test.mp3"))

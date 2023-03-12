@@ -21,7 +21,7 @@
   const voice = ref('')
   async function enterKey() {
     let res = await getVoiceURL(text.value);
-    voice.value = "src/public/"+res.audio
+    voice.value = "public/"+res.audio
     console.log(res);
     console.log(res.audio);
     // const blob = this.addWavHeader(res, 16000, 16, 1);
@@ -33,9 +33,9 @@
     audio.value.play();
     console.log(voice.value);
   }
-  function createObjectBlob(audio,type='text/plain'){
-	return new Blob([audio], { type });
-}
+//   function createObjectBlob(audio,type='text/plain'){
+// 	return new Blob([audio], { type });
+// }
 </script>
 <style scoped>
   .inputText{
