@@ -85,8 +85,8 @@ class Chat:
         scaled = np.int16(audio / np.max(np.abs(audio)) * 32767)
         write('test.wav', self.hps.data.sampling_rate, scaled)
         # read wav file to an audio-segment
-        AudioSegment.converter = r"D:\ffmpeg-master-latest-win64-gpl-shared\bin\ffmpeg.exe"
-        AudioSegment.ffprobe = r"D:\ffmpeg-master-latest-win64-gpl-shared\bin\ffprobe.exe"
+        # AudioSegment.converter = r"D:\ffmpeg-master-latest-win64-gpl-shared\bin\ffmpeg.exe"
+        # AudioSegment.ffprobe = r"D:\ffmpeg-master-latest-win64-gpl-shared\bin\ffprobe.exe"
         song = AudioSegment.from_wav("test.wav")
 
         # export audio segment to mp3
