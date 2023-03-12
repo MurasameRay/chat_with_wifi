@@ -61,7 +61,7 @@ class Chat:
 
     def chat_request(self, text):
         speaker_id = 10  # @param {type:"number"}
-        text = "よるまで、いっしょに帰りましょう"  # @param {type:"string"}
+        text = "よるまで、いっしょに帰りましょう"  # text
         noise_scale = 0.6  # @param {type:"number"}
         noise_scale_w = 0.668  # @param {type:"number"}
         length_scale = 1.0  # @param {type:"number"}

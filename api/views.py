@@ -21,8 +21,8 @@ Robot = Chat()
 
 @api_view(['POST'])
 def chatWithWife(request):
-    name = request.POST.get('word', default='zhuhaitao')
-    audio = Robot.chat_request("")
+    word = request.POST.get('word', default='zhuhaitao')
+    audio = Robot.chat_request(word)
     return Response({
         "audio": audio
     })
