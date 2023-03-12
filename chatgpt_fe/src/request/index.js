@@ -2,7 +2,7 @@ import axios from "axios";
 
 let service = axios.create({
 	baseURL: "http://localhost:8000/api/",
-	timeout: 100000,
+	timeout: 1000000,
 });
 
 // 请求拦截处理 请求拦截 在请求拦截中可以补充请求相关的配置
@@ -26,7 +26,7 @@ service.interceptors.response.use(
 	(res) => {
 		// 我们一般在这里处理，请求成功后的错误状态码 例如状态码是500，404，403
 		// res 是所有相应的信息
-		console.log(res);
+		// console.log(res);
 		return res.data;
 	},
 	(err) => {

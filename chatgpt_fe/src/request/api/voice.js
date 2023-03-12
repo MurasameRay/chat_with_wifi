@@ -1,11 +1,11 @@
 import service from "..";
 
-export const getVoice = (params) => {
+export const getVoiceURL = (word) => {
 	return service({
 		url: "chatWithWife/",
 		method: "POST",
 		data: {
-			word: params,
+			word: word,
 		},
 	});
 };

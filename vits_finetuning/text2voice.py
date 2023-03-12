@@ -1,4 +1,6 @@
 # %matplotlib inline
+from datetime import datetime
+
 import matplotlib.pyplot as plt
 import IPython.display as ipd
 
@@ -9,7 +11,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-
+from pathlib import Path
 import vits_finetuning.commons as commons
 import vits_finetuning.utils as utils
 # from data_utils import TextAudioLoader, TextAudioCollate, TextAudioSpeakerLoader, TextAudioSpeakerCollate
@@ -19,6 +21,9 @@ from vits_finetuning.text import text_to_sequence
 
 from scipy.io.wavfile import write
 import numpy as np
+from pydub import AudioSegment
+from pydub.playback import play
+
 
 class Chat:
 
@@ -62,7 +67,7 @@ class Chat:
 
     def chat_request(self, word):
         speaker_id = 10  # @param {type:"number"}
-        text = "よるまで、いっしょに帰りましょう"  # @param {type:"string"}
+        text = word. replace('\n', '')  # @param {type:"string"}
         noise_scale = 0.6  # @param {type:"number"}
         noise_scale_w = 0.668  # @param {type:"number"}
         length_scale = 1.0  # @param {type:"number"}
@@ -77,6 +82,22 @@ class Chat:
         # temp = ipd.display(ipd.Audio(audio, rate=hps.data.sampling_rate, normalize=False))
 
         # # write audio to wav file
-        # scaled = np.int16(audio / np.max(np.abs(audio)) * 32767)
-        # write('test.wav', hps.data.sampling_rate, scaled)
-        return audio
+        scaled = np.int16(audio / np.max(np.abs(audio)) * 32767)
+        write('test.wav', self.hps.data.sampling_rate, scaled)
+        # read wav file to an audio-segment
+        AudioSegment.converter = r"D:\ffmpeg-master-latest-win64-gpl-shared\bin\ffmpeg.exe"
+        AudioSegment.ffprobe = r"D:\ffmpeg-master-latest-win64-gpl-shared\bin\ffprobe.exe"
+        song = AudioSegment.from_wav("test.wav")
+
+        # export audio segment to mp3
+        song = song.set_frame_rate(44100)
+        print(os.listdir("./"))
+        name = "test_"+datetime.now().strftime('%Y_%m_%d_%H_%M_%S')+".mp3"
+        song.export("chatgpt_fe\\src\\public\\"+name, format="mp3")
+        # os.system("move \"test.mp3\" chatgpt_fe\\src\\public\\")
+        # with open(r"F:\Project\chat_with_wifi\test.mp3","rb", encoding="UTF-8") as f:
+        #     audio = f.read()
+        # audio = AudioSegment.from_mp3(Path(r"F:\Project\chat_with_wifi\test.mp3"))
+        # play audio-segment
+        # play(song)
+        return name
