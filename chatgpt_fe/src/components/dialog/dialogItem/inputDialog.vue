@@ -19,7 +19,7 @@
   const text = ref('')
   const audio = ref(null)
   async function enterKey() {
-    let res = await getVoice(text)
+    let res = await getVoice(text.value)
     console.log(res);
   }
 </script>
